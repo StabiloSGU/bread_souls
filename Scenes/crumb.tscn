@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://cswt1qyec2beh"]
+
+[ext_resource type="Script" path="res://Scenes/crumb.gd" id="1_u680m"]
+[ext_resource type="Texture2D" uid="uid://bdc38wtyoi345" path="res://Assets/Sprites/Crumb_1.png" id="2_p3jxs"]
+[ext_resource type="Texture2D" uid="uid://cnrkqxu17fnby" path="res://Assets/Sprites/Crumb_2.png" id="3_yfxp8"]
+[ext_resource type="Texture2D" uid="uid://bjcsr764bhtue" path="res://Assets/Sprites/Crumb_3.png" id="4_1n17m"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_68mgt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_p3jxs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_yfxp8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_1n17m")
+}],
+"loop": true,
+"name": &"flying",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yulia"]
+radius = 4.12311
+
+[node name="Crumb" type="Area2D"]
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("1_u680m")
+
+[node name="CrumbSprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_68mgt")
+animation = &"flying"
+frame = 1
+frame_progress = 0.809632
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_yulia")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
