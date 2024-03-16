@@ -20,6 +20,7 @@ func get_size_multiplier() -> float:
 	return size_multiplier
 
 func _ready() -> void:
+	Manager.player = self
 	_initial_health = health
 	_initial_speed = speed
 	gui.player = self
@@ -29,7 +30,7 @@ func _process(_delta: float) -> void:
 	gui.update()
 	player_camera.update()
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	update_size_and_speed()
 	
 	if Input.is_action_just_pressed("shoot"):

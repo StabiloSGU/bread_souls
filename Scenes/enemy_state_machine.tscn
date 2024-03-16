@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://by7ns40u4i2rg"]
+
+[ext_resource type="Script" path="res://Scenes/enemy_state_machine.gd" id="1_78wtf"]
+[ext_resource type="Script" path="res://Scenes/Idle.gd" id="2_vwp62"]
+[ext_resource type="Script" path="res://Scenes/Wander.gd" id="3_l8n4i"]
+[ext_resource type="Script" path="res://Scenes/SearchPlayer.gd" id="4_172tv"]
+[ext_resource type="Script" path="res://Scenes/Enraged.gd" id="5_hax2x"]
+
+[node name="EnemyStateMachine" type="Node" node_paths=PackedStringArray("current_state")]
+script = ExtResource("1_78wtf")
+current_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="."]
+script = ExtResource("2_vwp62")
+
+[node name="Wander" type="Node" parent="."]
+script = ExtResource("3_l8n4i")
+
+[node name="SearchPlayer" type="Node" parent="."]
+script = ExtResource("4_172tv")
+
+[node name="Enraged" type="Node" parent="."]
+script = ExtResource("5_hax2x")
