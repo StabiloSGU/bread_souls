@@ -2,20 +2,42 @@ extends CharacterBody2D
 
 @onready var sprite = $Sprite
 @onready var gun = $Gun
+@onready var player_camera = $PlayerCamera
+@onready var gui = $PlayerCamera/GuiLayer/GUI
 
-const SPEED = 300.0
+@export var speed := 150.0
+@export var health := 22
+var _initial_health : float
+var _initial_speed : float
+var size_multiplier : float = 1.0 :
+	get = get_size_multiplier
 
 # hurtbox is an area that can be hit by enemy
 # monitoring a mask
 # it only listens to incoming enemy hitboxes
 
+func get_size_multiplier() -> float:
+	return size_multiplier
+
+func _ready() -> void:
+	_initial_health = health
+	_initial_speed = speed
+	gui.player = self
+	player_camera.player = self
+	
+func _process(_delta: float) -> void:
+	gui.update()
+	player_camera.update()
+
 func _physics_process(delta):
+	update_size_and_speed()
+	
 	if Input.is_action_just_pressed("shoot"):
-		gun.shoot()
+		handle_shoot()
 	
 	var direction = Input.get_vector("left", "right", "up", "down")
 	if direction:
-		velocity = direction * SPEED
+		velocity = direction * speed
 		
 		sprite.play("walking")
 		if velocity.x > 0:
@@ -25,8 +47,8 @@ func _physics_process(delta):
 			sprite.flip_h = true
 			gun.position.x = -22
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.y = move_toward(velocity.y, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, speed)
+		velocity.y = move_toward(velocity.y, 0, speed)
 		
 		sprite.play("idle")
 
@@ -35,9 +57,17 @@ func _physics_process(delta):
 func die() -> void:
 	queue_free()
 
-
-
 func _on_hurtbox_body_entered(body):
 	# will only work on enemies
 	body.eat_player()
 	die()
+
+func handle_shoot() -> void:
+	if health > 10:
+		health -= 1
+		gun.shoot()
+
+func update_size_and_speed() -> void:
+	size_multiplier = health / _initial_health
+	scale = Vector2(1.0, 1.0) * size_multiplier
+	speed = _initial_speed + _initial_speed * size_multiplier * 2

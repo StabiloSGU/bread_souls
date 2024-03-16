@@ -10,5 +10,5 @@ func _ready():
 func shoot() -> void:
 	var new_crumb = crumb_scene.instantiate()
 	new_crumb.global_position = global_position
-	new_crumb.direction= player.global_position.direction_to(global_position)
+	new_crumb.direction = player.global_position.direction_to(global_position)
 	add_child(new_crumb)

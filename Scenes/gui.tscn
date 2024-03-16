@@ -1,0 +1,70 @@
+[gd_scene load_steps=7 format=3 uid="uid://ipcnjecfxhrw"]
+
+[ext_resource type="Script" path="res://Scenes/gui.gd" id="1_c1w7q"]
+[ext_resource type="Texture2D" uid="uid://drsewhh8x0gy" path="res://Assets/Sprites/Crumb_atlas_1.png" id="1_ytygd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ptkkt"]
+atlas = ExtResource("1_ytygd")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_peocw"]
+atlas = ExtResource("1_ytygd")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bss37"]
+atlas = ExtResource("1_ytygd")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_w2g1o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ptkkt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_peocw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bss37")
+}],
+"loop": true,
+"name": &"roll",
+"speed": 5.0
+}]
+
+[node name="GUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c1w7q")
+
+[node name="Health" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 74.0
+offset_top = 61.0
+offset_right = 113.0
+offset_bottom = 84.0
+scale = Vector2(5, 5)
+alignment = 1
+
+[node name="Control" type="Control" parent="Health"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Health/Control"]
+texture_filter = 1
+position = Vector2(8, 8)
+sprite_frames = SubResource("SpriteFrames_w2g1o")
+animation = &"roll"
+autoplay = "roll"
+frame_progress = 0.470998
+
+[node name="Counter" type="Label" parent="Health"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "22"

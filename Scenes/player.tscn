@@ -1,10 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://cjnm4pnaihl5x"]
+[gd_scene load_steps=11 format=3 uid="uid://cjnm4pnaihl5x"]
 
 [ext_resource type="Script" path="res://Scenes/player.gd" id="1_rpko6"]
 [ext_resource type="Texture2D" uid="uid://ckhn7ukxab3x7" path="res://Assets/Sprites/Bread_frame_1.png" id="2_msrar"]
 [ext_resource type="Texture2D" uid="uid://dvuo75ki1b15w" path="res://Assets/Sprites/Bread_frame_2.png" id="3_jxskv"]
 [ext_resource type="Texture2D" uid="uid://camd2pngeutd4" path="res://Assets/Sprites/Bread_frame_3.png" id="4_eqkjf"]
 [ext_resource type="PackedScene" uid="uid://w3pe63jhtad2" path="res://Scenes/gun.tscn" id="5_jf3sv"]
+[ext_resource type="PackedScene" uid="uid://ipcnjecfxhrw" path="res://Scenes/gui.tscn" id="6_lerf7"]
+[ext_resource type="Script" path="res://Scenes/PlayerCamera.gd" id="6_ym53o"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fxnq8"]
 animations = [{
@@ -43,6 +45,7 @@ size = Vector2(56, 69)
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_rpko6")
+speed = 200.0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -66,5 +69,13 @@ debug_color = Color(0, 0.647059, 0.243137, 0.419608)
 
 [node name="Gun" parent="." instance=ExtResource("5_jf3sv")]
 position = Vector2(22, 0)
+
+[node name="PlayerCamera" type="Camera2D" parent="."]
+zoom = Vector2(2.105, 2.105)
+script = ExtResource("6_ym53o")
+
+[node name="GuiLayer" type="CanvasLayer" parent="PlayerCamera"]
+
+[node name="GUI" parent="PlayerCamera/GuiLayer" instance=ExtResource("6_lerf7")]
 
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]

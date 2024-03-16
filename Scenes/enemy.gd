@@ -33,7 +33,7 @@ func die() -> void:
 	queue_free()
 
 func blink() -> void:
-	print('enemy hit!')
+	pass
 
 
 func _on_hurtbox_area_entered(area):
