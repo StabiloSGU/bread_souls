@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://c25i28sqq5o73"]
+[gd_scene load_steps=20 format=3 uid="uid://c25i28sqq5o73"]
 
 [ext_resource type="Script" path="res://Scenes/enemy.gd" id="1_45a8e"]
 [ext_resource type="Texture2D" uid="uid://c708fhkrvt0sq" path="res://Assets/Sprites/Toaster_frame_1.png" id="1_q2ig0"]
 [ext_resource type="Texture2D" uid="uid://bquclktditku4" path="res://Assets/Sprites/Toaster_death_frame_1.png" id="2_8hjjq"]
 [ext_resource type="Texture2D" uid="uid://da5hlrv28q3qv" path="res://Assets/Sprites/Toaster_frame_2.png" id="2_bs5d5"]
+[ext_resource type="Texture2D" uid="uid://drsewhh8x0gy" path="res://Assets/Sprites/Crumb_atlas_1.png" id="2_siyig"]
 [ext_resource type="Texture2D" uid="uid://hqxapt2xe7jv" path="res://Assets/Sprites/Bread_munched_frame_1.png" id="3_skdkg"]
 [ext_resource type="Texture2D" uid="uid://cy153wwu2jsa4" path="res://Assets/Sprites/Toaster_death_frame_2.png" id="3_w21vr"]
 [ext_resource type="Texture2D" uid="uid://b2djhg0ay0ngw" path="res://Assets/Sprites/Toaster_death_frame_3.png" id="4_ol2j8"]
@@ -60,8 +61,27 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_pnbgg"]
+atlas = ExtResource("2_siyig")
+region = Rect2(0, 0, 16, 16)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cf0lh"]
 size = Vector2(78, 60)
+
+[sub_resource type="Animation" id="Animation_70p21"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Munching:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3, 42)]
+}
 
 [sub_resource type="Animation" id="Animation_bfucy"]
 resource_name = "munching"
@@ -126,20 +146,17 @@ tracks/4/keys = {
 "update": 1,
 "values": [Vector2(0, -5.51), Vector2(0, 0)]
 }
-
-[sub_resource type="Animation" id="Animation_70p21"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Munching:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(3, 42)]
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Particles:emitting")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6x5g7"]
@@ -160,16 +177,34 @@ collision_mask = 9
 script = ExtResource("1_45a8e")
 
 [node name="ToasterSprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_5y4kl")
-animation = &"death"
+animation = &"idle"
 offset = Vector2(0, -5.51)
 
 [node name="Munching" type="AnimatedSprite2D" parent="."]
-visible = false
+texture_filter = 1
 position = Vector2(3, 42)
 scale = Vector2(1.19565, 1)
 sprite_frames = SubResource("SpriteFrames_s4xbq")
 animation = &"munching"
+
+[node name="Particles" type="CPUParticles2D" parent="."]
+texture_filter = 1
+position = Vector2(0, 14)
+emitting = false
+amount = 6
+texture = SubResource("AtlasTexture_pnbgg")
+direction = Vector2(0, -1)
+gravity = Vector2(0, 98)
+initial_velocity_min = 35.09
+initial_velocity_max = 228.07
+angular_velocity_min = 8.43
+angular_velocity_max = 480.0
+scale_amount_max = 1.5
+split_scale = true
+scale_curve_x = null
+scale_curve_y = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 1)

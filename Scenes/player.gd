@@ -18,7 +18,12 @@ func _physics_process(delta):
 		velocity = direction * SPEED
 		
 		sprite.play("walking")
-		sprite.flip_h = velocity.x > 0
+		if velocity.x > 0:
+			sprite.flip_h = false
+			gun.position.x = 22
+		elif velocity.x < 0:
+			sprite.flip_h = true
+			gun.position.x = -22
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.y = move_toward(velocity.y, 0, SPEED)
@@ -29,6 +34,7 @@ func _physics_process(delta):
 
 func die() -> void:
 	queue_free()
+
 
 
 func _on_hurtbox_body_entered(body):

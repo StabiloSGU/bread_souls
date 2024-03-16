@@ -45,15 +45,13 @@ collision_layer = 2
 script = ExtResource("1_rpko6")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_fxnq8")
 animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 5.5)
 shape = SubResource("RectangleShape2D_na5jv")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-enabled = false
 
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 0

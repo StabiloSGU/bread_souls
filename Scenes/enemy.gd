@@ -5,6 +5,7 @@ extends CharacterBody2D
 @onready var nav_collision = $CollisionShape2D
 @onready var hurtbox_collision = $Hurtbox/CollisionShape2D
 @onready var hitbox_collision = $Hitbox/CollisionShape2D
+@onready var particles = $Particles
 
 @export var health := 3
 
