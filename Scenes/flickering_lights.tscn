@@ -1,0 +1,67 @@
+[gd_scene load_steps=11 format=3 uid="uid://bo8eq2h68dqqd"]
+
+[ext_resource type="Script" path="res://Scenes/flickering_lights.gd" id="1_l7yfm"]
+[ext_resource type="Texture2D" uid="uid://oth6gelwgmv3" path="res://Assets/light.png" id="2_jhxv5"]
+[ext_resource type="Script" path="res://Scenes/Sounds.gd" id="3_ffg2d"]
+[ext_resource type="AudioStream" uid="uid://ddjvyl61k7bhj" path="res://Assets/Sounds/flick1.wav" id="4_fmua2"]
+[ext_resource type="AudioStream" uid="uid://clrgswim6h05j" path="res://Assets/Sounds/flick2.wav" id="5_ya74c"]
+[ext_resource type="AudioStream" uid="uid://co3h7vfvi4m31" path="res://Assets/Sounds/flick3.wav" id="6_5q3iy"]
+[ext_resource type="AudioStream" uid="uid://c83o2wq5npi02" path="res://Assets/Sounds/flick4.wav" id="7_i2gnn"]
+[ext_resource type="AudioStream" uid="uid://bt8aw5b4bc3gq" path="res://Assets/Sounds/flick5.wav" id="8_w8ct3"]
+[ext_resource type="AudioStream" uid="uid://blo6yagflqlt2" path="res://Assets/Sounds/flick6.wav" id="9_3v14f"]
+[ext_resource type="AudioStream" uid="uid://0v20tpmlwefu" path="res://Assets/Sounds/flick7.wav" id="10_8jy7m"]
+
+[node name="FlickeringLights" type="Node2D"]
+script = ExtResource("1_l7yfm")
+
+[node name="Light" type="PointLight2D" parent="."]
+color = Color(0.0156863, 0.305882, 0.47451, 1)
+energy = 0.4
+texture = ExtResource("2_jhxv5")
+texture_scale = 0.2
+
+[node name="Shadow" type="PointLight2D" parent="."]
+energy = 0.3
+shadow_enabled = true
+texture = ExtResource("2_jhxv5")
+texture_scale = 0.2
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="Sounds" type="Node2D" parent="."]
+script = ExtResource("3_ffg2d")
+
+[node name="Flick1" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("4_fmua2")
+max_distance = 100.0
+
+[node name="Flick2" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("5_ya74c")
+max_distance = 100.0
+
+[node name="Flick3" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("6_5q3iy")
+max_distance = 100.0
+
+[node name="Flick4" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("7_i2gnn")
+max_distance = 100.0
+
+[node name="Flick5" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("8_w8ct3")
+max_distance = 100.0
+
+[node name="Flick6" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("9_3v14f")
+max_distance = 100.0
+
+[node name="Flick7" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("10_8jy7m")
+max_distance = 100.0
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+scale = Vector2(21.2, 12.52)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c25i28sqq5o73"]
+[gd_scene load_steps=28 format=3 uid="uid://c25i28sqq5o73"]
 
 [ext_resource type="Script" path="res://Scenes/enemy.gd" id="1_45a8e"]
 [ext_resource type="Texture2D" uid="uid://c708fhkrvt0sq" path="res://Assets/Sprites/Toaster_frame_1.png" id="1_q2ig0"]
@@ -12,6 +12,11 @@
 [ext_resource type="Texture2D" uid="uid://1y7hilekscku" path="res://Assets/Sprites/Toaster_death_frame_4.png" id="5_6p714"]
 [ext_resource type="PackedScene" uid="uid://by7ns40u4i2rg" path="res://Scenes/enemy_state_machine.tscn" id="11_lbgdv"]
 [ext_resource type="Texture2D" uid="uid://oth6gelwgmv3" path="res://Assets/light.png" id="12_x3b8k"]
+[ext_resource type="Script" path="res://Scenes/MunchSounds.gd" id="13_3i4vi"]
+[ext_resource type="AudioStream" uid="uid://du068wq6ldlvt" path="res://Assets/Sounds/zapsplat_cartoon_bite_munch_001_13092.mp3" id="14_kviyl"]
+[ext_resource type="AudioStream" uid="uid://b1omwnea4uvvc" path="res://Assets/Sounds/zapsplat_cartoon_bite_munch_002_13093.mp3" id="15_cwbc8"]
+[ext_resource type="AudioStream" uid="uid://bn4emc08jvumt" path="res://Assets/Sounds/zapsplat_cartoon_bite_munch_003_13094.mp3" id="16_1pfuu"]
+[ext_resource type="AudioStream" uid="uid://dllwtt5f204mp" path="res://Assets/Sounds/articulated_MONSTER+Yeti+roar+12.mp3" id="17_ovi1l"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5y4kl"]
 animations = [{
@@ -145,6 +150,35 @@ tracks/5/keys = {
 "update": 1,
 "values": [true, false]
 }
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("MunchSounds")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.9, 1.2, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"play_random_sound"
+}, {
+"args": [],
+"method": &"play_random_sound"
+}, {
+"args": [],
+"method": &"play_random_sound"
+}, {
+"args": [],
+"method": &"play_random_sound"
+}, {
+"args": [],
+"method": &"play_random_sound"
+}, {
+"args": [],
+"method": &"play_random_sound"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_7ae36"]
 resource_name = "scanning_left"
@@ -248,14 +282,15 @@ script = ExtResource("1_45a8e")
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_5y4kl")
 animation = &"idle"
-offset = Vector2(0, -5.51)
 
 [node name="Munching" type="AnimatedSprite2D" parent="."]
+visible = false
 texture_filter = 1
-position = Vector2(3, 33)
+position = Vector2(1, 25)
 scale = Vector2(1.19565, 1)
 sprite_frames = SubResource("SpriteFrames_s4xbq")
 animation = &"munching"
+frame = 1
 
 [node name="Particles" type="CPUParticles2D" parent="."]
 texture_filter = 1
@@ -341,9 +376,9 @@ target_desired_distance = 40.0
 path_postprocessing = 1
 avoidance_enabled = true
 radius = 40.0
-debug_enabled = true
 
 [node name="State" type="Label" parent="."]
+visible = false
 offset_left = -20.0
 offset_top = -70.0
 offset_right = 20.0
@@ -355,5 +390,23 @@ color = Color(0.92549, 0, 0, 1)
 energy = 0.5
 texture = ExtResource("12_x3b8k")
 texture_scale = 0.15
+
+[node name="MunchSounds" type="Node2D" parent="."]
+script = ExtResource("13_3i4vi")
+
+[node name="MunchSound1" type="AudioStreamPlayer2D" parent="MunchSounds"]
+stream = ExtResource("14_kviyl")
+
+[node name="MunchSound2" type="AudioStreamPlayer2D" parent="MunchSounds"]
+stream = ExtResource("15_cwbc8")
+
+[node name="MunchSound3" type="AudioStreamPlayer2D" parent="MunchSounds"]
+stream = ExtResource("16_1pfuu")
+
+[node name="Roar" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("17_ovi1l")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+scale = Vector2(80.8463, 57.9128)
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

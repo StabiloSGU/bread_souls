@@ -65,6 +65,8 @@ func die() -> void:
 	visible = false
 	collision_shape.disabled = true
 	hurtbox.get_node("CollisionShape2D").disabled = true
+	await get_tree().create_timer(3.0).timeout
+	Manager.fail()
 
 func _on_hurtbox_body_entered(body):
 	# will only work on enemies
@@ -80,3 +82,8 @@ func update_size_and_speed() -> void:
 	size_multiplier = health / _initial_health
 	scale = Vector2(1.0, 1.0) * size_multiplier
 	speed = _initial_speed + _initial_speed * size_multiplier * 2
+
+func win() -> void:
+	gui.fade_in()
+	await gui.get_node("AnimationPlayer").animation_finished
+	Manager.win()

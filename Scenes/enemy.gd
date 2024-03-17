@@ -10,11 +10,13 @@ extends CharacterBody2D
 @onready var nav_agent = $NavigationAgent2D
 @onready var state = $State
 @onready var rage_light = $RageLight
+@onready var roar = $Roar
 
 @onready var right_scanner = $Scanners/RightScanner
 @onready var left_scanner = $Scanners/LeftScanner
 
 @export var speed := 100
+@export var enraged_speed := 200
 @export var health := 3
 
 
@@ -47,7 +49,10 @@ func reset_scanners() -> void:
 	left_scanner.get_node("Line2D").visible = false
 
 func eat_player() -> void:
+	rage_light.visible = true
 	animation_player.play("munching")
+	await animation_player.animation_finished
+	rage_light.visible = false
 
 func die() -> void:
 	nav_collision.disabled = true

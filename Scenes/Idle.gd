@@ -4,7 +4,7 @@ extends BaseState
 # enemy would idle for idling_time seconds
 # then decide to either search for player or wander around
 # searching will only be available if the enemy has last known position
-@export var idling_time : float = 2.0
+@export var idling_time : float = 1.0
 var rng = RandomNumberGenerator.new()
 
 func enter() -> void:

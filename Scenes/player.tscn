@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cjnm4pnaihl5x"]
+[gd_scene load_steps=14 format=3 uid="uid://cjnm4pnaihl5x"]
 
 [ext_resource type="Script" path="res://Scenes/player.gd" id="1_rpko6"]
 [ext_resource type="Texture2D" uid="uid://ckhn7ukxab3x7" path="res://Assets/Sprites/Bread_frame_1.png" id="2_msrar"]
@@ -43,6 +43,27 @@ size = Vector2(56, 69)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0lv52"]
 size = Vector2(56, 69)
 
+[sub_resource type="Animation" id="Animation_48nju"]
+resource_name = "fadein"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.964706, 0.980392, 1, 0), Color(0.964706, 0.980392, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wxmx8"]
+_data = {
+"fadein": SubResource("Animation_48nju")
+}
+
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_rpko6")
@@ -79,12 +100,28 @@ script = ExtResource("6_ym53o")
 
 [node name="GUI" parent="PlayerCamera/GuiLayer" instance=ExtResource("6_lerf7")]
 
+[node name="ColorRect" type="ColorRect" parent="PlayerCamera/GuiLayer/GUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.964706, 0.980392, 1, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerCamera/GuiLayer/GUI"]
+libraries = {
+"": SubResource("AnimationLibrary_wxmx8")
+}
+
 [node name="Lights" type="Node2D" parent="."]
 
 [node name="Light" type="PointLight2D" parent="Lights"]
-energy = 0.3
+energy = 0.5
 texture = ExtResource("8_uxcwy")
-texture_scale = 0.2
+texture_scale = 0.25
 
 [node name="Shadow" type="PointLight2D" parent="Lights"]
 energy = 0.3

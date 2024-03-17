@@ -10,7 +10,8 @@ config_version=5
 
 [application]
 
-config/name="Bread_souls"
+config/name="Left 4 Bread"
+run/main_scene="res://Scenes/starting_slide.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
