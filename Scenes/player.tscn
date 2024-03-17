@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cjnm4pnaihl5x"]
+[gd_scene load_steps=12 format=3 uid="uid://cjnm4pnaihl5x"]
 
 [ext_resource type="Script" path="res://Scenes/player.gd" id="1_rpko6"]
 [ext_resource type="Texture2D" uid="uid://ckhn7ukxab3x7" path="res://Assets/Sprites/Bread_frame_1.png" id="2_msrar"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://w3pe63jhtad2" path="res://Scenes/gun.tscn" id="5_jf3sv"]
 [ext_resource type="PackedScene" uid="uid://ipcnjecfxhrw" path="res://Scenes/gui.tscn" id="6_lerf7"]
 [ext_resource type="Script" path="res://Scenes/PlayerCamera.gd" id="6_ym53o"]
+[ext_resource type="Texture2D" uid="uid://oth6gelwgmv3" path="res://Assets/light.png" id="8_uxcwy"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fxnq8"]
 animations = [{
@@ -77,5 +78,18 @@ script = ExtResource("6_ym53o")
 [node name="GuiLayer" type="CanvasLayer" parent="PlayerCamera"]
 
 [node name="GUI" parent="PlayerCamera/GuiLayer" instance=ExtResource("6_lerf7")]
+
+[node name="Lights" type="Node2D" parent="."]
+
+[node name="Light" type="PointLight2D" parent="Lights"]
+energy = 0.3
+texture = ExtResource("8_uxcwy")
+texture_scale = 0.2
+
+[node name="Shadow" type="PointLight2D" parent="Lights"]
+energy = 0.3
+shadow_enabled = true
+texture = ExtResource("8_uxcwy")
+texture_scale = 0.3
 
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]

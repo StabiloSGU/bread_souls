@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://c25i28sqq5o73"]
+[gd_scene load_steps=23 format=3 uid="uid://c25i28sqq5o73"]
 
 [ext_resource type="Script" path="res://Scenes/enemy.gd" id="1_45a8e"]
 [ext_resource type="Texture2D" uid="uid://c708fhkrvt0sq" path="res://Assets/Sprites/Toaster_frame_1.png" id="1_q2ig0"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://p8ffynoy3fpl" path="res://Assets/Sprites/Bread_munched_frame_2.png" id="4_q1g5s"]
 [ext_resource type="Texture2D" uid="uid://1y7hilekscku" path="res://Assets/Sprites/Toaster_death_frame_4.png" id="5_6p714"]
 [ext_resource type="PackedScene" uid="uid://by7ns40u4i2rg" path="res://Scenes/enemy_state_machine.tscn" id="11_lbgdv"]
+[ext_resource type="Texture2D" uid="uid://oth6gelwgmv3" path="res://Assets/light.png" id="12_x3b8k"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5y4kl"]
 animations = [{
@@ -66,8 +67,8 @@ animations = [{
 atlas = ExtResource("2_siyig")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cf0lh"]
-size = Vector2(78, 60)
+[sub_resource type="CircleShape2D" id="CircleShape2D_7hl3l"]
+radius = 39.0128
 
 [sub_resource type="Animation" id="Animation_bfucy"]
 resource_name = "munching"
@@ -238,7 +239,7 @@ size = Vector2(78, 60)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5ka66"]
 size = Vector2(78, 60)
 
-[node name="Enemy" type="CharacterBody2D"]
+[node name="Enemy" type="CharacterBody2D" groups=["Enemies"]]
 collision_layer = 4
 collision_mask = 9
 script = ExtResource("1_45a8e")
@@ -275,7 +276,7 @@ scale_curve_y = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 1)
-shape = SubResource("RectangleShape2D_cf0lh")
+shape = SubResource("CircleShape2D_7hl3l")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -333,5 +334,26 @@ points = PackedVector2Array(0, 0, -175, -30)
 default_color = Color(1, 0, 0.160784, 0.333333)
 
 [node name="EnemyStateMachine" parent="." instance=ExtResource("11_lbgdv")]
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 40.0
+target_desired_distance = 40.0
+path_postprocessing = 1
+avoidance_enabled = true
+radius = 40.0
+debug_enabled = true
+
+[node name="State" type="Label" parent="."]
+offset_left = -20.0
+offset_top = -70.0
+offset_right = 20.0
+offset_bottom = -47.0
+
+[node name="RageLight" type="PointLight2D" parent="."]
+visible = false
+color = Color(0.92549, 0, 0, 1)
+energy = 0.5
+texture = ExtResource("12_x3b8k")
+texture_scale = 0.15
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

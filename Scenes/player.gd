@@ -4,9 +4,11 @@ extends CharacterBody2D
 @onready var gun = $Gun
 @onready var player_camera = $PlayerCamera
 @onready var gui = $PlayerCamera/GuiLayer/GUI
+@onready var collision_shape = $CollisionShape2D
+@onready var hurtbox = $Hurtbox
 
 @export var speed := 150.0
-@export var health := 22
+@export var health := 12
 var _initial_health : float
 var _initial_speed : float
 var size_multiplier : float = 1.0 :
@@ -31,40 +33,46 @@ func _process(_delta: float) -> void:
 	player_camera.update()
 
 func _physics_process(_delta):
-	update_size_and_speed()
-	
-	if Input.is_action_just_pressed("shoot"):
-		handle_shoot()
-	
-	var direction = Input.get_vector("left", "right", "up", "down")
-	if direction:
-		velocity = direction * speed
+	if health > 0:
+		update_size_and_speed()
 		
-		sprite.play("walking")
-		if velocity.x > 0:
-			sprite.flip_h = false
-			gun.position.x = 22
-		elif velocity.x < 0:
-			sprite.flip_h = true
-			gun.position.x = -22
-	else:
-		velocity.x = move_toward(velocity.x, 0, speed)
-		velocity.y = move_toward(velocity.y, 0, speed)
+		if Input.is_action_just_pressed("shoot"):
+			handle_shoot()
 		
-		sprite.play("idle")
+		var direction = Input.get_vector("left", "right", "up", "down")
+		if direction:
+			velocity = direction * speed
+			
+			sprite.play("walking")
+			if velocity.x > 0:
+				sprite.flip_h = false
+				gun.position.x = 22
+			elif velocity.x < 0:
+				sprite.flip_h = true
+				gun.position.x = -22
+		else:
+			velocity.x = move_toward(velocity.x, 0, speed)
+			velocity.y = move_toward(velocity.y, 0, speed)
+			
+			sprite.play("idle")
 
-	move_and_slide()
+		move_and_slide()
 
 func die() -> void:
-	queue_free()
+	health = 0
+	set_process_input(false)
+	set_process_unhandled_input(false)
+	visible = false
+	collision_shape.disabled = true
+	hurtbox.get_node("CollisionShape2D").disabled = true
 
 func _on_hurtbox_body_entered(body):
 	# will only work on enemies
 	body.eat_player()
-	die()
+	call_deferred("die")
 
 func handle_shoot() -> void:
-	if health > 10:
+	if health > 1:
 		health -= 1
 		gun.shoot()
 

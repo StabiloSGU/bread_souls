@@ -8,7 +8,6 @@ extends BaseState
 var rng = RandomNumberGenerator.new()
 
 func enter() -> void:
-	print('im idling for ', idling_time)
 	# would need rework for more than one enemy type
 	target_node.toaster_sprite.play("idle")
 	#target_node.thinking_sprite.play("thinking")
@@ -17,8 +16,7 @@ func enter() -> void:
 
 func make_decision() -> void:
 	rng.randomize()
-	var actions = ['SearchPlayer']#['Idle', 'Wander', 'SearchPlayer']
+	var actions = ['Idle', 'Wander', 'SearchPlayer']
 	var decision = actions[rng.randi() % actions.size()]
-	print('decided to ', decision)
 	state_manager.change_state(decision)
 	

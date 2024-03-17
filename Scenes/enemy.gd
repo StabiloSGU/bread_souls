@@ -7,6 +7,9 @@ extends CharacterBody2D
 @onready var hitbox_collision = $Hitbox/CollisionShape2D
 @onready var particles = $Particles
 @onready var enemy_state_machine = $EnemyStateMachine
+@onready var nav_agent = $NavigationAgent2D
+@onready var state = $State
+@onready var rage_light = $RageLight
 
 @onready var right_scanner = $Scanners/RightScanner
 @onready var left_scanner = $Scanners/LeftScanner
@@ -17,6 +20,9 @@ extends CharacterBody2D
 
 # store players last known position
 var last_known_position : Vector2
+
+# target to wander to
+var wander_target : Vector2
 
 # hurtbox - place that can be hit by crumbs
 # monitoring a mask
@@ -64,6 +70,9 @@ func _on_hurtbox_area_entered(_area):
 		die()
 
 func _process(delta: float) -> void:
+	state.text = enemy_state_machine.current_state.name
+	if health == 0:
+		die()
 	enemy_state_machine.process(delta)
 
 func _physics_process(delta: float) -> void:

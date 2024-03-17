@@ -8,16 +8,21 @@ extends BaseState
 var rng = RandomNumberGenerator.new()
 
 func enter() -> void:
-	#target_node.get_new_map_target()
+	get_new_map_target()
 	rng.randomize()
-	wandering_time = rng.randf_range(3.0, 7.0)
-	print('im going to wander for ', wandering_time)
-	await get_tree().create_timer(wandering_time).timeout
-	done_wandering()
+	target_node.nav_agent.target_position = target_node.wander_target
+	target_node.nav_agent.connect('target_reached', done_wandering)
+
+func exit() -> void:
+	target_node.nav_agent.disconnect('target_reached', done_wandering)
 
 func done_wandering() -> void:
 	state_manager.change_state("Idle")
 
 func physics_process(_delta: float) -> void:
-	# move to target
-	pass
+	var dir = target_node.to_local(target_node.nav_agent.get_next_path_position()).normalized()
+	target_node.velocity = dir * target_node.speed
+	target_node.move_and_slide()
+
+func get_new_map_target() -> void:
+	target_node.wander_target = Manager.maze.get_random_point_in_radius(target_node.global_position)

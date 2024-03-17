@@ -2,9 +2,11 @@ extends BaseState
 
 
 func enter() -> void:
+	target_node.rage_light.visible = true
 	target_node.toaster_sprite.set_modulate(Color("df0000"))
 	
 func exit() -> void:
+	target_node.rage_light.visible = false
 	target_node.toaster_sprite.set_modulate(Color("ffffff"))
 	
 
