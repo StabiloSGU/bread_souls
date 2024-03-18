@@ -10,6 +10,7 @@ var current_state := false
 
 func _ready() -> void:
 	switch(current_state)
+	rng.randomize()
 
 func switch(state) -> void:
 	if state:

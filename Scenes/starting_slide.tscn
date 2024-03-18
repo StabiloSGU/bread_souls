@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bl1wblllxrv5p"]
 
 [ext_resource type="Script" path="res://Scenes/starting_slide.gd" id="1_4v1ev"]
-[ext_resource type="Texture2D" uid="uid://c7x4pa2hpqu5x" path="res://Assets/Sprites/Title.png" id="2_2y8bc"]
+[ext_resource type="Texture2D" uid="uid://cv5u2ko4r62wd" path="res://Assets/Sprites/left4bread.svg" id="2_mn0rp"]
 [ext_resource type="FontFile" uid="uid://b0nrmnk0lv8a2" path="res://Assets/Fonts/VBfont1.ttf" id="3_ick7m"]
 
 [node name="StartingSlide" type="Control"]
@@ -22,15 +22,15 @@ offset_left = -744.0
 offset_right = 744.0
 offset_bottom = 837.0
 grow_horizontal = 2
-texture = ExtResource("2_2y8bc")
+texture = ExtResource("2_mn0rp")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.868
+anchor_top = 0.928
 anchor_right = 0.5
-anchor_bottom = 0.868
+anchor_bottom = 0.958
 offset_left = -303.5
 offset_top = -81.905
 offset_right = 303.5
